@@ -1,0 +1,118 @@
+{# 首页 注册 登录 #}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load static %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    {# 网页标题内容块 #}
+	<title>{% block title %}{% endblock title %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	{# 网页顶部引入文件块 #}
+    {% block topfiles %}{% endblock topfiles %}
+</head>
+<body>
+{# 网页顶部欢迎信息块 #}
+{% block header_con %}
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到首页</div>
+			<div class="fr">
+                {% if user.is_authenticated %}
+				<div class="login_btn fl">
+					欢迎您：<em>{{ user.username }}</em>
+                    <span>|</span>
+					<a href="{% url 'logout' %}">退出</a>
+				</div>
+                {% else %}
+				<div class="login_btn fl">
+					<a href="{% url 'login' %}">登录</a>
+					<span>|</span>
+					<a href="{% url 'register' %}">注册</a>
+				</div>
+                {% endif %}
+				<div class="user_link fl">
+                    hhhhssssssssssssssssss
+					<span>|</span>
+					<a href="user_manage/bar">柱状-Bar</a>
+					<span>|</span>
+                    <a href="user_manage/map">地图-Map</a>
+					<span>|</span>
+					<a href="{% url 'user_manage:chart' 'line'%}">折线-Line</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock header_con %}
+
+{# 网页顶部搜索框块 #}
+{% block search_bar %}
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索">
+			<input type="button" class="input_btn fr" name="" value="提交">
+		</div>
+	</div>
+{% endblock search_bar %}
+
+{# 网站主体内容块 #}
+{% block body %}
+    网站主体内容块
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页1</a></li>
+				<li class="interval">|</li>
+				<li><a href="">首页2</a></li>
+				<li class="interval">|</li>
+				<li><a href="">首页3</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+			<li><a href="#model01" class="fruit">分类1</a></li>
+			<li><a href="#model02" class="seafood">分类2</a></li>
+			<li><a href="#model03" class="meet">分类3</a></li>
+			<li><a href="#model04" class="egg">分类4</a></li>
+			<li><a href="#model05" class="vegetables">分类5</a></li>
+			<li><a href="#model06" class="ice">分类6</a></li>
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="images/slide.jpg" alt="幻灯片"></li>
+				<li><img src="images/slide02.jpg" alt="幻灯片"></li>
+				<li><img src="images/slide03.jpg" alt="幻灯片"></li>
+				<li><img src="images/slide04.jpg" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+{#		<div class="adv fl">#}
+{#			<a href="#"><img src="{% static 'images/adv01.jpg' %}"></a>#}
+{#			<a href="#"><img src="{% static 'images/adv02.jpg' %}"></a>#}
+{#		</div>#}
+	</div>
+
+
+{% endblock body %}
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+		</div>
+		<p>All Rights Reserved</p>
+		<p>************************</p>
+	</div>
+    {# 网页底部html元素块 #}
+    {% block bottom %}{% endblock bottom %}
+    {# 网页底部引入文件块 #}
+	{% block bottomfiles %}{% endblock bottomfiles %}
+</body>
+</html>
