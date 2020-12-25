@@ -1,0 +1,7 @@
+先更新sqlite3，再安装python3
+
+gis安装： https://my.oschina.net/freegis/blog/781657
+yum安装：
+yum install -y gcc gcc-c++
+yum install -y geos
+# yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-dev

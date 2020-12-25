@@ -1,0 +1,7 @@
+﻿pymysql
+django
+psycopg2-binary
+django-simpleui
+django-import-export
+requests
+pyecharts
