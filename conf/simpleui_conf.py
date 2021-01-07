@@ -1,8 +1,8 @@
 
 # simpleui 设置
 # 首页配置
-# SIMPLEUI_HOME_TITLE = '百度'
-# SIMPLEUI_HOME_PAGE = 'https://www.baidu.com'
+SIMPLEUI_HOME_TITLE = '首页地图导航'
+SIMPLEUI_HOME_PAGE = '/data_display/map_page'
 # 首页图标,支持element-ui的图标和fontawesome的图标
 # SIMPLEUI_HOME_ICON = 'el-icon-date'
 # 设置simpleui 点击首页图标跳转的地址

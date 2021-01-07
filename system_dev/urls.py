@@ -21,14 +21,17 @@ from user_manage.views import index, RegisterView, LoginView, LogoutView, test
 
 
 urlpatterns = [
-    # path('test/', test, name="test"),
+    path('test/', test, name="test"),
     path('register/', RegisterView.as_view(), name="register"),
     path('login/', LoginView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('admin/', admin.site.urls, name="admin"),
+
     re_path('^user_manage/', include(('user_manage.urls', 'user_manage'), namespace='user_manage')),
-    re_path('^dynamic_chart/', include(('data_display.urls', 'data_display')), name="data_display"),
-    # re_path('^$', index, name='index')    # 放在最后
+    re_path('^data_display/', include(('data_display.urls', 'data_display')), name="data_display"),
+
+    re_path('^$', index, name='index'),    # 放在最后
+    # re_path('^$', admin.site.urls, name="admin"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

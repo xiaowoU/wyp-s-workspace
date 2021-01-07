@@ -8,8 +8,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.contrib import auth, messages
 from django.shortcuts import render, get_object_or_404, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from user_manage.models import User, Project
+from user_manage.formAuth import RegForm, LoginForm
 from utils.mixin import LoginRequiredMixin
 from db.proxy import ReadGeoInfo, ReadDataInfo
 
@@ -27,6 +29,7 @@ request.environ: request的header详细信息
 def test(request):
     # d2 = datetime.datetime.strptime(j, '%Y-%m-%d %H:%M:%S')
     return HttpResponse("TEST")
+
 
 # /index
 def index(request):
@@ -69,7 +72,8 @@ class RegisterView(View):
         # todo: use system
         user.is_staff = 1
         user.save()
-        return HttpResponseRedirect(reverse('login'))
+        # return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect("/admin/login/")
 
 # /login
 class LoginView(View):
@@ -88,6 +92,8 @@ class LoginView(View):
         return render(request, 'login.html', {'username': username, 'checked': checked})
 
     def post(self, request):
+        # print(type(request))
+        # print(request.environ)
         '''登录校验'''
         # 接收数据
         username = request.POST.get('username')
@@ -103,6 +109,14 @@ class LoginView(View):
             # 获取登录后要跳转得地址，默认为首页
             next_url = request.GET.get('next', reverse('index'))
             response = HttpResponseRedirect(next_url)
+            # # 判断是否需要记住用户名
+            # remember = request.POST.get('remember')
+            # if remember == 'on':
+            #     # 记住用户名
+            #     response.set_cookie('username', username, max_age=7*24*3600)
+            # else:
+            #     response.delete_cookie('username')
+            # 返回response
             return response
         else:
             # 用户名或密码错误
@@ -112,6 +126,8 @@ class LoginView(View):
 class LogoutView(LoginRequiredMixin, View):
     '''退出登录'''
     def get(self, request):
+        '''退出登录'''
+        # 清除用户的session信息
         auth.logout(request)
         # 跳转
         return HttpResponseRedirect(reverse('login'))
@@ -132,7 +148,6 @@ class GetChartView(LoginRequiredMixin, View):
             # return HttpResponse(bar.render_embed())
             return HttpResponse(dct[chart]().render_embed())
 
-    # todo: demo
     def get_bar(self) -> Bar:
         bar = (
             Bar()
@@ -149,6 +164,7 @@ class GetChartView(LoginRequiredMixin, View):
         lineinfo = ReadDataInfo()
         line_chart = lineinfo.generate_line("sn_001")
         return line_chart
+
 
     # /user_manage/line
     # @decorators.permission_required

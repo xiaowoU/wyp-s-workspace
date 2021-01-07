@@ -158,7 +158,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "real_static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "real_static")
 
 
 # 设置上传目录
@@ -167,5 +167,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # 配置登录地址
-LOGIN_URL = '/login'
+# LOGIN_URL = '/login'
 
