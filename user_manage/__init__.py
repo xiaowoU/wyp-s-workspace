@@ -6,4 +6,4 @@ default_app_config = '%s.MyConfig' % app_name
 
 class MyConfig(AppConfig):
     name = app_name
-    verbose_name = '--用户管理'
+    verbose_name = '用户管理'

@@ -1,8 +1,8 @@
 '''==================================================
 @IDE: PyCharm
-@Time : 2020/12/14 10:32 
+@Time : 2020/12/14 10:32
 @Author : wyp
-@File : mixin.py 
+@File : mixin.py
 =================================================='''
 from django.contrib.auth.decorators import login_required
 

@@ -45,9 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites'
-    # 'django.contrib.sitemaps'
-    # 'django.contrib.gis',
+    'corsheaders',
     'user_manage',
     'data_display',
     'test_install',
@@ -57,6 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',     #设置跨域
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -169,3 +168,6 @@ MEDIA_URL = '/media/'
 # 配置登录地址
 # LOGIN_URL = '/login'
 
+#设置跨域(一个导包三处配置)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True

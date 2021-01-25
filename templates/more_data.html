@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+            background: #f0f9e8;
+            font-family: sans-serif;
+        }
+        #dtbody{
+            width: 708px;
+            height: 249px;
+            background-color: lightcoral;
+            margin: 0 auto;
+            border: 1px solid black;
+            border-collapse: collapse; /* 边框合并 */
+        }
+
+        #dtbody td,#dtbody th{
+            border: 1px solid black;
+            text-indent: 10px; /* 文字缩进 */
+        }
+
+    </style>
+</head>
+<body>
+<!-- todo: 弹窗页面-->
+
+    <form>
+        <div><input type="button" value="关闭" onClick="window.history.back()"></div>
+    </form>
+
+    <div>
+        <table id="dtbody">
+            <tr>
+                <th colspan="7">xx隧道xx指标检测</th>
+            </tr>
+            <tr>
+                <th rowspan="2">测点名称</th>
+                <th rowspan="2">记录时间</th>
+                <th colspan="3" align="center">位移</th>
+                <th rowspan="2">本次报警</th>
+                <th rowspan="2">累计报警</th>
+            </tr>
+            <tr>
+                <th>记录值(mm)</th>
+                <th>变化量(mm)</th>
+                <th>变化速率(mm/d)</th>
+            </tr>
+            {% for item in List %}
+                <tr>
+                    <td>{{ item.create_time }}</td>
+                    <td>{{ item.device_sn }}</td>
+                    <td>{{ item.timestamp }}</td>
+                    <td>{{ item.convergence }}</td>
+                    <td>{{ item.sedimentation }}</td>
+                    <td>{{ item.data6 }}</td>
+                    <td>{{ item.data7 }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</body>
+</html>

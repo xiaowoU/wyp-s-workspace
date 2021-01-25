@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>数据详情-界面debug</title>
+    <script src="{% static 'js/vue.min.js' %}"></script>
+    <script src="{% static 'js/axios.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet"/>
+    <!--<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/echarts.min.js' %}"></script>
+
+    <link href="{% static 'css/details.css' %}" rel="stylesheet"/>
+
+</head>
+<body>
+    <div id="app">
+        <div id="title">数据详情页</div>
+        <div id="tim"></div>
+        <div id="l1">
+            <div>
+                <el-select v-model="projectSelected" placeholder="请选择">
+                    <el-option
+                            v-for="(item, index) in ProjectList"
+                            :key="index"
+                            :label="item.name"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+                <input type="submit" class="choose_btn" @click="projectSubmit" value="选择项目"></input>
+            </div>
+            <table id="projbody">
+                <tr><th colspan="5" height=38px>工程信息</th></tr>
+                <tr><th>隧道名</th><td colspan="3" v-text="ProjectAttr.name"></td></tr>
+                <tr><th>业主单位</th><td colspan="3" v-text="ProjectAttr.owner_company"></td></tr>
+                <tr><th>运营单位</th><td colspan="3" v-text="ProjectAttr.manage_company"></td></tr>
+                <tr><th>省</th><td v-text="ProjectAttr.province"></td><th>市</th><td v-text="ProjectAttr.city"></td></tr>
+                <tr>
+                    <th width="20%">县</th><td width="25%" v-text="ProjectAttr.district"></td>
+                    <th width="20%">位置详情</th><td width="35%" v-text="ProjectAttr.position"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="l2">
+            <div>
+                <el-select v-model="sectionSelected" placeholder="请选择">
+                    <el-option
+                            v-for="(item, index) in SectionList"
+                            :key="index"
+                            :label="item.name"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+                <input type="submit" class="choose_btn" @click="sectionSubmit" value="选择断面"></input>
+            </div>
+            <table id="sectbody">
+                <tr><th colspan="5" height=38px>断面信息</th></tr>
+                <tr><th width="20%">断面名称</th><td colspan="3" v-text="SectionAttr.name"></td></tr>
+                <tr><th width="20%">隧道边幅名称</th><td colspan="3" v-text="SectionAttr.tunnel_name"></td></tr>
+                <tr><th width="20%">里程</th><td colspan="3" v-text="SectionAttr.mileage"></td></tr>
+            </table>
+        </div>
+        <div id="c1"></div>
+        <div id="c2">
+            <!--<div>
+                <label>起始日期</label><input type="text"/>
+                <label>终止日期</label><input type="text"/>
+                <input class="choose_btn" type="submit" value="提交">
+            </div>-->
+            <div>
+                <input type="submit" class="choose_btn" style="width: 20%" value=">>查看更多"
+                       @click="location.href=(`../more_data?sectionid=${SectionAttr.id}&devicesn=${DeviceAttr.device_sn}`);"/>
+            </div>
+            <table id="databody">
+                <tr><th colspan="7">隧道指标检测</th></tr>
+                <tr>
+                    <th rowspan="2">测点名称</th>
+                    <th rowspan="2">记录时间</th>
+                    <th colspan="3" align="center">位移</th>
+                    <th rowspan="2">本次报警</th>
+                    <th rowspan="2">累计报警</th>
+                </tr>
+                <tr>
+                    <th>记录值(mm)</th>
+                    <th>变化量(mm)</th>
+                    <th>变化速率(mm/d)</th>
+                </tr>
+                <tr v-for="item in List">
+                    <td v-text="item.device_sn"></td>
+                    <td v-text="item.create_time"></td>
+                    <td v-text="item.timestamp"></td>
+                    <td v-text="item.convergence"></td>
+                    <td v-text="item.sedimentation"></td>
+                    <td v-text="item.data6"></td>
+                    <td v-text="item.data7"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="r1">
+            <div>
+                <el-select v-model="deviceSelected" placeholder="请选择">
+                    <el-option
+                        v-for="(item, index) in DeviceList"
+                        :key="index"
+                        :label="item.name"
+                        :value="item.id">
+                </el-option>
+                </el-select>
+            <!--<select><option v-for="item in DeviceList">{{ item }}</option></select>-->
+                <input type="submit" class="choose_btn" @click="deviceSubmit" value="选择设备"></input>
+            </div>
+            <table id="devcbody">
+                <tr><th colspan="2" height=38px>设备信息</th></tr>
+                <tr><th width="30%">设备名称</th><td v-text="DeviceAttr.name"></td></tr>
+                <tr><th>设备编号</th><td v-text="DeviceAttr.device_sn"></td></tr>
+                <tr><th>设备类型</th><td v-text="DeviceAttr.type"></td></tr>
+                <tr><th>型号</th><td v-text="DeviceAttr.model"></td></tr>
+                <tr><th>逻辑ID</th><td v-text="DeviceAttr.ip"></td></tr>
+                <tr><th>MAC地址</th><td v-text="DeviceAttr.mac"></td></tr>
+            </table>
+        </div>
+        <div id="r2">轮廓图</div>
+    </div>
+
+    <script>
+    </script>
+
+    <script src="{% static 'js/details.js' %}"></script>
+</body>
+</html>

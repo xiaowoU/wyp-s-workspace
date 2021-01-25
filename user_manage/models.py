@@ -6,7 +6,7 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core import validators
-from db.base_model import BaseModel
+from utils.base_model import BaseModel
 import uuid
 
 class Company(BaseModel):
@@ -31,11 +31,9 @@ class Company(BaseModel):
 # # AUTH_USER_MODEL = 'user_manage.User'  # 在设置中声明
 class User(AbstractUser, BaseModel):
     # help_text="xx", validators=[validators.RegexValidator(regex=r"^1111$", message="xxx！")], error_messages={"unique": "已存在！", "required": "非空！"}
-    real_name = models.CharField(verbose_name='真实姓名', max_length=64, blank=True, null=True)
     tel = models.CharField(verbose_name='联系电话', max_length=64, blank=True, null=True)
     wechat = models.CharField(verbose_name='微信', max_length=64, blank=True, null=True)
-    # mail = models.CharField(verbose_name='邮箱', max_length=64, blank=True, null=True)
-    company = models.ForeignKey('user_manage.Project', verbose_name='所属单位', to_field='id', on_delete=models.DO_NOTHING, blank=True, null=True, default='')
+    company = models.ForeignKey('user_manage.Company', verbose_name='所属单位', to_field='id', on_delete=models.DO_NOTHING, blank=True, null=True, default='')
 
     def __unicode__(self):
         return self.name
@@ -82,7 +80,8 @@ class OperateCompany(BaseModel):
 
 
 class Section(BaseModel):
-    name = models.CharField(verbose_name='隧道边幅名称', max_length=64)
+    name = models.CharField(verbose_name='断面名称', max_length=64)
+    tunnel_name = models.CharField(verbose_name='隧道边幅名称', max_length=64)
     mileage = models.CharField(verbose_name='里程', max_length=64)
     project = models.ForeignKey('user_manage.Project', verbose_name='所属工程', to_field='id', on_delete=models.DO_NOTHING, blank=True, null=True, default='')
 
@@ -97,7 +96,7 @@ class Section(BaseModel):
 
 
 class Device(BaseModel):
-    device_name = models.CharField(verbose_name='设备名称', max_length=128, null=True, blank=True)
+    name = models.CharField(verbose_name='设备名称', max_length=128, null=True, blank=True)
     device_sn = models.CharField(verbose_name='设备编号', max_length=128)
     firmware_version = models.CharField(verbose_name='固件版本', max_length=32, null=True, blank=True)
     type = models.IntegerField(verbose_name='设备类型', null=True, blank=True)

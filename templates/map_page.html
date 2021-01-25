@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>地图详情</title>
+    <script src="{% static 'js/echarts.min.js' %}"></script>
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/vue.min.js' %}"></script>
+    <script src="{% static 'js/axios.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=24a8c52897b421e2bbb46ff50441c7e9&plugin=AMap.Scale,AMap.ToolBar"></script>
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/map_page.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <style type="text/css">
+        .amap-logo{
+        display: none;
+        opacity:0 !important;
+        }
+        .amap-copyright {
+            opacity:0;
+        }
+    </style>
+		
+</head>
+<body>
+    <div id="title">地图详情页</div>
+    <div id="tim"></div>
+    <!-- 页面主体部分-->
+    <div id="map-chart">
+        <div class="box">
+            <el-select v-model="valueSelected" filterable placeholder="请选择">
+                <el-option
+                        v-for="(item, index) in ProjectGeoList"
+                        :key="index"
+                        :label="item.name"
+                        :value="item.lnglat">
+                </el-option>
+            </el-select>
+            <input type="submit" value="查看" @click="valueSubmit"/>
+        </div>
+    </div>
+
+    <script src="{% static 'js/gene_map.js' %}"></script>
+    <script src="{% static 'js/run_time.js' %}"></script>
+</body>
+</html>

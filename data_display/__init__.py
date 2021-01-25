@@ -6,4 +6,4 @@ default_app_config = '%s.MyConfig' % app_name
 
 class MyConfig(AppConfig):
     name = app_name
-    verbose_name = '--数据统计'
+    verbose_name = '数据统计'

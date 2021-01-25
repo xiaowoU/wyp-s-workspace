@@ -10,10 +10,10 @@ from django.contrib import auth, messages
 from django.shortcuts import render, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from user_manage.models import User, Project
+from user_manage.models import User
 from user_manage.formAuth import RegForm, LoginForm
 from utils.mixin import LoginRequiredMixin
-from db.proxy import ReadGeoInfo, ReadDataInfo
+from utils.proxy import ReadGeoInfo, ReadDataInfo
 
 from pyecharts import options as opts
 from pyecharts.charts import Bar, Map, Line
@@ -24,16 +24,6 @@ from pyecharts.charts import Bar, Map, Line
 type(request): request的类型
 request.environ: request的header详细信息
 '''
-
-# /test
-def test(request):
-    # d2 = datetime.datetime.strptime(j, '%Y-%m-%d %H:%M:%S')
-    return HttpResponse("TEST")
-
-
-# /index
-def index(request):
-    return render(request, 'base.html')
 
 # /register
 class RegisterView(View):

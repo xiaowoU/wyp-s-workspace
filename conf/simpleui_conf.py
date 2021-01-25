@@ -28,21 +28,13 @@ SIMPLEUI_CONFIG = {
     'menus': [
         {
         'app': 'auth',
-        'name': '图表试验',
+        'name': '测量数据展示',
         'icon': 'fas fa-user-shield',
         'models': [
             {
-                'name': 'geo图',
+                'name': '数据详情图',
                 'icon': 'fa fa-chart-line',
-                'url': '/user_manage/geo/'
-            }, {
-            'name': '折线图',
-            'icon': 'fa fa-chart-line',
-            'url': '/user_manage/line/'
-            }, {
-            'name': '柱状图',
-            'icon': 'fa fa-chart-bar',
-            'url': '/user_manage/bar/'
+                'url': '/data_display/details_page/'
             },
         ]
     },]

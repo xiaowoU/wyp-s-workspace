@@ -5,3 +5,4 @@ django-simpleui
 django-import-export
 requests
 pyecharts
+django-cors-headers
