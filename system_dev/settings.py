@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'system_dev.wsgi.application'
 DATABASES = {
 	'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'tms',
+    'NAME': 'tms1',
     'USER': 'root',
     'PASSWORD': '123456',
     'HOST': 'localhost',

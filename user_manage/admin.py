@@ -51,13 +51,6 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('province',)
 
-
-@admin.register(Device)
-class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'device_sn', 'section', 'firmware_version', 'type', 'model', 'ip', 'mac')
-    search_fields = ('device_sn', 'firmware_version')
-    list_filter = ('type',)
-
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
     list_display = ('name', 'tunnel_name', 'mileage', 'project')

@@ -7,3 +7,10 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True # 说明是一个抽象模型类
+
+
+class DataModel(models.Model):
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', null=True)
+
+    class Meta:
+        abstract = True
