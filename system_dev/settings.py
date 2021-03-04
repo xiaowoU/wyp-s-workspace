@@ -12,16 +12,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from conf.simpleui_conf import *
 import sys
+from conf.simpleui_conf import *
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-from jinja2 import Environment, FileSystemLoader
-from pyecharts.globals import CurrentConfig
-#  pyecharts 模板，位于 pyecharts.render.templates 拷贝至刚新建的 templates_pyecharts 文件夹
-CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader("{}/templates/templates_pyecharts".format(BASE_DIR)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -98,25 +96,17 @@ WSGI_APPLICATION = 'system_dev.wsgi.application'
 
 DATABASES = {
 	'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'tms1',
-    'USER': 'root',
-    'PASSWORD': '123456',
-    'HOST': 'localhost',
-    'PORT': '3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': cfg.get('db', 'db'),
+        'USER': cfg.get('db', 'user'),
+        'PASSWORD': cfg.get('db', 'pswd'),
+        'HOST': cfg.get('db', 'host'),
+        'PORT': cfg.get('db', 'port'),
     },
 }
-# DATABASES = {
-#     'default': {
-#         # 'ENGINE': 'django.db.backends.postgresql',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'bgs',
-#         'USER': 'postgres',
-#         'PASSWORD': '123456',
-#         'HOST': '192.168.13.14',
-#         'PORT': '5432',
-#     },
-# }
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

@@ -16,7 +16,7 @@ def map_page(request):
 
 # /details_page
 def details_page(request):
-    # todo: 还没做成，通过这个接口获取projectid
+    # todo: 通过这个接口获取projectid
     pid = request.GET.get('projectid', None)
     print("Pid: %s" % pid)
     return render(request, "details.html", {"Pid": pid})
@@ -246,12 +246,11 @@ def get_details_info(request):
                 attr_device.update({
                     "id": device["id"],
                     "name": device["name"],
-                    "device_sn": device["device_sn"],
-                    "firmware_version": device["firmware_version"],
                     "type": device["type"],
-                    "model": device["model"],
-                    "ip": device["ip"],
-                    "mac": device["mac"]
+                    "device_sn": device["device_sn"],
+                    "soft_ver": device["soft_ver"],
+                    "firm_ver": device["firm_ver"],
+                    "status": device["status"]
                 })
         if not did:
             dsn = devices[0]["device_sn"]
@@ -260,19 +259,18 @@ def get_details_info(request):
             attr_device.update({
                 "id": devices[0]["id"],
                 "name": devices[0]["name"],
-                "device_sn": devices[0]["device_sn"],
-                "firmware_version": devices[0]["firmware_version"],
                 "type": devices[0]["type"],
-                "model": devices[0]["model"],
-                "ip": devices[0]["ip"],
-                "mac": devices[0]["mac"]
+                "device_sn": devices[0]["device_sn"],
+                "soft_ver": devices[0]["soft_ver"],
+                "firm_ver": devices[0]["firm_ver"],
+                "status": devices[0]["status"]
             })
         # create_time = datetime.datetime.strftime(device["create_time"], "%Y-%m-%d-%H:%M:%S")
     # print("=======", lst_projects, lst_sections, lst_devices)
 
     # todo: xx隧道xx指标检测
     results = Result.objects \
-        .filter(Q(section=sid) & Q(device_sn=dsn))\
+        .filter(device_sn=dsn)\
         .order_by("id") \
         .values()
     # print(results)

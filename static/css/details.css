@@ -24,7 +24,7 @@ table,th, td{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url(../image/Galaxy.jpg) no-repeat;
+    background: url(../images/Galaxy.jpg) no-repeat;
 }
 #tim {
     position: absolute;

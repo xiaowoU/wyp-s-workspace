@@ -7,6 +7,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core import validators
 from utils.base_model import BaseModel, DataModel
+from utils.utils_code import WARN, TYPE, STATUS, CHARGE_STATUS, MEAS_RANGE
 import uuid
 
 class Company(BaseModel):
@@ -97,7 +98,7 @@ class Position(BaseModel):
     position = models.CharField(verbose_name='安装位置', max_length=128)
 
     def __unicode__(self):
-        return self.name
+        return self.device_sn
 
     class Meta:
         db_table = 't_position'
@@ -109,12 +110,7 @@ class Position(BaseModel):
 class Warning(BaseModel):
     name = models.CharField(verbose_name='预警名', max_length=128)
     # Ⅳ级（一般）、Ⅲ级（较重）、Ⅱ级（严重）、Ⅰ级（特别严重）
-    level = models.IntegerField(verbose_name='预警级别', choices=[
-                                                                (4, 'Ⅳ级：一般'),
-                                                                (3, 'Ⅲ级：较重'),
-                                                                (2, 'Ⅱ级：严重'),
-                                                                (1, 'Ⅰ级：特别严重'),
-                                                            ], default=4)
+    level = models.IntegerField(verbose_name='预警级别', choices=WARN, default=4)
     notify_obj = models.CharField(verbose_name='通知对象', max_length=128)
     desc = models.CharField(verbose_name='预警信息描述', max_length=256)
     project = models.ForeignKey('user_manage.Project', verbose_name='所属工程', to_field='id', on_delete=models.DO_NOTHING, blank=True, null=True, default='')
@@ -134,17 +130,6 @@ class Warning(BaseModel):
 
 
 class Device(BaseModel):
-    TYPE = (
-        (0x0001, '轮廓测量器'),
-        (0x1001, '裂缝计'),
-        (0x1002, '激光计'),
-        (0x1003, '应变计'),
-    )
-    STATUS = (
-        (0, '启动'),
-        (1, '暂停'),
-        (2, '停止')
-    )
     section = models.ForeignKey('user_manage.Section', verbose_name='所属断面', on_delete=models.DO_NOTHING, blank=True, null=True)
     type = models.IntegerField(verbose_name='设备类型', blank=True, null=True, choices=TYPE)
     name = models.CharField(verbose_name='设备名称', max_length=128, blank=True, null=True)
@@ -152,14 +137,14 @@ class Device(BaseModel):
     soft_ver = models.CharField(verbose_name='软件版本', max_length=32, blank=True, null=True)
     firm_ver = models.CharField(verbose_name='固件版本', max_length=32, blank=True, null=True)
     to_softver = models.CharField(verbose_name='升级到版本', max_length=32, blank=True, null=True)
-    status = models.BooleanField(verbose_name='在线状态', )
     control = models.IntegerField(verbose_name='控制测量启停', blank=True, null=True, choices=STATUS)
-    upfile = models.CharField(verbose_name='上传升级文件', max_length=100, blank=True, null=True)
+    upfile = models.FileField(verbose_name='上传升级文件', max_length=100, blank=True, null=True)
+    status = models.BooleanField(verbose_name='在线状态', )
 
     def __str__(self):
         ret = None
         if self.type:
-            for i in self.TYPE:
+            for i in TYPE:
                 if self.type == i[0]:
                     type_name = i[1]
                     ret = f'{type_name}-{self.device_sn}'
@@ -223,16 +208,11 @@ class ZeroOffset(BaseModel):
         app_label = 'test_install'
 
 class UnifyParam(BaseModel):
-    CHARGE_STATUS = (
-        (0, '未充电'),
-        (1, '充电完成'),
-        (2, '充电中'),
-    )
     device = models.OneToOneField('test_install.Device', verbose_name='所属设备', on_delete=models.DO_NOTHING, blank=True, null=True)
     meas_intvl = models.CharField(verbose_name='测量(采集)频率', max_length=32, blank=True, null=True)
     up_intvl = models.CharField(verbose_name='上传频率', max_length=32, blank=True, null=True)
     meas_mode = models.CharField(verbose_name='测量值模式', max_length=32, blank=True, null=True)
-    range = models.CharField(verbose_name='测距量程', max_length=32, blank=True, null=True)
+    range = models.CharField(verbose_name='测距量程', max_length=32, blank=True, null=True,  choices=MEAS_RANGE)
     server_ip = models.CharField(verbose_name='服务器', max_length=32, blank=True, null=True)
     server_bak_ip = models.CharField(verbose_name='备用服务器', max_length=32, blank=True, null=True)
     server_port = models.CharField(verbose_name='服务器端口', max_length=32, blank=True, null=True)
@@ -241,6 +221,7 @@ class UnifyParam(BaseModel):
     server_bak_switch = models.BooleanField(verbose_name='服务器B开关', )
     network_status = models.CharField(verbose_name='网络工作状态', max_length=32, blank=True, null=True)
     meas_num = models.CharField(verbose_name='测量点数', max_length=32, blank=True, null=True)
+
     reserve = models.CharField(verbose_name='留用', max_length=32, blank=True, null=True)
     # 只读数据
     addr_storage = models.CharField(verbose_name='记录存储地址', max_length=32, blank=True, null=True)
@@ -276,7 +257,7 @@ class CollectRaw(DataModel):
     class Meta:
         # managed = False
         db_table = 't_collect_raw'
-        verbose_name = u'轮廓数据表'
+        verbose_name = u'轮廓数据'
         verbose_name_plural = verbose_name
         app_label = 'data_display'
 
@@ -285,14 +266,13 @@ class Result(DataModel):
     timestamp = models.DateTimeField(verbose_name='测量的时间戳')
     convergence = models.FloatField(verbose_name='收敛值', max_length=64)
     sedimentation = models.FloatField(verbose_name='沉降值', max_length=64)
-    section = models.ForeignKey('user_manage.Section', verbose_name='所属断面', to_field='id', on_delete=models.DO_NOTHING, blank=True, null=True, default='')
 
     def __unicode__(self):
         return self.device_sn
 
     class Meta:
         db_table = 't_result'
-        verbose_name = u'数据处理结果表'
+        verbose_name = u'数据处理结果'
         verbose_name_plural = verbose_name
         app_label = 'data_display'
 
@@ -300,15 +280,14 @@ class UnifyDataRaw(DataModel):
     device_sn = models.CharField(verbose_name='设备编号', max_length=128, blank=True, null=True)
     meas_time = models.DateTimeField(verbose_name='当前第一点时间', blank=True, null=True)
     index = models.CharField(verbose_name='上传流水号', max_length=64, blank=True, null=True)
-    value = models.CharField(verbose_name='测量值', max_length=64, blank=True, null=True)
+    value = models.CharField(verbose_name='测量值(0.01mm)', max_length=64, blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 't_unify_data_raw'
         verbose_name = u'一体化数据'
         verbose_name_plural = verbose_name
         app_label = 'data_display'
-
 
 
 

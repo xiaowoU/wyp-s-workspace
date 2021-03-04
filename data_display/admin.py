@@ -11,7 +11,7 @@ class CollectRawAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('device_sn', 'convergence', 'sedimentation', 'timestamp', 'section')
+    list_display = ('device_sn', 'convergence', 'sedimentation', 'timestamp',)
     search_fields = ('device_sn',)
     list_filter = ('device_sn',)
 

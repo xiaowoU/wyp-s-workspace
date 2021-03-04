@@ -1,3 +1,18 @@
+'''==================================================
+@IDE: PyCharm
+@Time : 2021/3/2 16:29
+@Author : wyp
+@File : ss.py
+=================================================='''
+import os
+from configparser import ConfigParser
+
+
+# 获取相关配置文件
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+config_file = os.path.join(BASE_DIR, 'conf', 'conf.ini')
+cfg = ConfigParser()
+cfg.read(config_file)
 
 # simpleui 设置
 # 首页配置
@@ -7,7 +22,8 @@ SIMPLEUI_HOME_PAGE = '/data_display/map_page'
 # SIMPLEUI_HOME_ICON = 'el-icon-date'
 # 设置simpleui 点击首页图标跳转的地址
 # SIMPLEUI_INDEX = 'https://www.88cto.com'
-SIMPLEUI_INDEX = 'http://192.168.13.14:9999/user_manage/geo/'
+SIMPLEUI_INDEX = 'http://%s:%s/user_manage/geo/' % (cfg.get('srv', 'host'),
+                                                    cfg.get('srv', 'port'))
 # 首页显示服务器、python、django、simpleui相关信息
 SIMPLEUI_HOME_INFO = False
 # 首页显示快速操作

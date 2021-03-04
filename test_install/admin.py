@@ -7,7 +7,7 @@ import datetime
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('section', 'type', 'name', 'device_sn', 'soft_ver', 'firm_ver', 'to_softver', 'status', 'control', 'upfile',)
+    list_display = ('section', 'type', 'name', 'device_sn', 'soft_ver', 'firm_ver', 'to_softver', 'control', 'upfile', 'status',)
     search_fields = ('status',)
     list_filter = ('section', 'type',)
 
@@ -204,12 +204,13 @@ class ZeroOffsetAdmin(admin.ModelAdmin):
 class UnifyParamAdmin(admin.ModelAdmin):
     list_display = ('device', 'meas_intvl', 'up_intvl', 'meas_mode', 'range',
                     'server_ip', 'server_bak_ip', 'server_port', 'server_bak_port',
-                    'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num', 'reserve',
+                    'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num',
+                    'reserve',
                     'addr_storage', 'addr_upload', 'init_val', 'firm_ver',
                     'soft_ver', 'power_type', 'charge_state', 'battery_volt',)
     fields = ('device', 'meas_intvl', 'up_intvl', 'meas_mode', 'range',
-                    'server_ip', 'server_bak_ip', 'server_port', 'server_bak_port',
-                    'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num',)
+              'server_ip', 'server_bak_ip', 'server_port', 'server_bak_port',
+              'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num',)
     search_fields = ('device',)
     list_filter = ('device',)
 
@@ -236,7 +237,6 @@ class UnifyParamAdmin(admin.ModelAdmin):
                     "server_bak_switch": obj.server_bak_switch,# 服务器B开关1B
                     "network_status": obj.network_status,      # 网络工作状态1B
                     "meas_num": obj.meas_num,               # 测量(采集)点数(1B)
-                    "reserve": obj.reserve,                 # 留用(1B)
                 }
             }
             CmdPub.send_cmd(dct_msg)

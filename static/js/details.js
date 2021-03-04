@@ -91,7 +91,7 @@ option = {
     ]
 };
 
-var url_page = "http://192.168.13.14:9999/data_display/get_details_info";
+var url_page = "http://192.168.20.14:9999";
 
 //异步加载数据
 var vm = new Vue({
@@ -113,7 +113,7 @@ var vm = new Vue({
 
     mounted () {
         axios
-            .get(url_page)
+            .get(`${url_page}/data_display/get_details_info`)
             .then(response => {
                 console.log(response);
                 this.ProjectList = response.data.ProjectList;
@@ -144,7 +144,7 @@ var vm = new Vue({
         async projectSubmit (){
             // project按钮
             console.log(this.projectSelected);
-            const{data:res} = await axios.get(`${url_page}?projectid=${this.projectSelected}`);
+            const{data:res} = await axios.get(`${url_page}/data_display/get_details_info?projectid=${this.projectSelected}`);
             console.log(res);
             // 更新数据
             this.ProjectAttr = res.ProjectAttr;
@@ -162,7 +162,7 @@ var vm = new Vue({
         async sectionSubmit (){
             // section按钮
             console.log(this.projectSelected);
-            const{data:res} = await axios.get(`${url_page}?sectionid=${this.sectionSelected}`);
+            const{data:res} = await axios.get(`${url_page}/data_display/get_details_info?sectionid=${this.sectionSelected}`);
             console.log(res);
             // 更新数据
             this.SectionAttr = res.SectionAttr;
@@ -178,7 +178,7 @@ var vm = new Vue({
         async deviceSubmit (){
             // device按钮
             console.log(this.deviceSelected);
-            const{data:res} = await axios.get(`${url_page}?deviceid=${this.deviceSelected}`);
+            const{data:res} = await axios.get(`${url_page}/data_display/get_details_info?deviceid=${this.deviceSelected}`);
             console.log(res);
             // 更新数据
             this.DeviceAttr = res.DeviceAttr;

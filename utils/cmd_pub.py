@@ -6,6 +6,14 @@
 =================================================='''
 import pika
 import json
+import os
+from configparser import ConfigParser
+
+# 获取相关配置文件
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+config_file = os.path.join(BASE_DIR, 'conf', 'conf.ini')
+cfg = ConfigParser()
+cfg.read(config_file)
 
 class CmdPub(object):
     def __init__(self):
@@ -25,10 +33,14 @@ class CmdPub(object):
     def send_cmd(data):
         print(data)
         queue_name = 'Q_%s' % data.get("device_sn")
-        credentials = pika.PlainCredentials('rabbit1', '123456')  # mq用户名和密码
+        credentials = pika.PlainCredentials(cfg.get('mq', 'name'),
+                                            cfg.get('mq', 'pswd'))  # mq用户名和密码
         # 虚拟队列需要指定参数 virtual_host，如果是默认的可以不填。
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='192.168.20.14', port=5672, virtual_host='/', credentials=credentials))
+        param = pika.ConnectionParameters(host=cfg.get('mq', 'host'),
+                                          port=cfg.get('mq', 'port'),
+                                          virtual_host='/',
+                                          credentials=credentials)
+        connection = pika.BlockingConnection(param)
         channel = connection.channel()
         # 声明消息队列，消息将在这个队列传递，如不存在，则创建
         result = channel.queue_declare(queue=queue_name)

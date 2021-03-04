@@ -4,8 +4,8 @@ from django.contrib.auth.models import Group
 # Register your models here.
 
 from django.contrib import admin
-admin.site.site_header = '隧道轮廓自动化测量系统'
-admin.site.site_title = '隧道轮廓系统'
+admin.site.site_header = '道路健康监测系统'
+admin.site.site_title = '道路监测系统'
 # don't display authinfo
 # admin.site.unregister(Group)
 
