@@ -69,7 +69,7 @@ class OperateCompany(BaseModel):
     contacts = models.CharField(verbose_name='联系人', max_length=128, null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.manage_company
 
     class Meta:
         db_table = 't_operate_company'
@@ -244,15 +244,15 @@ class UnifyParam(BaseModel):
 
 class CollectRaw(DataModel):
     device_sn = models.CharField(verbose_name='设备编号', max_length=128, blank=True, null=True)
-    scan_time = models.CharField(verbose_name='扫描时间', max_length=32, blank=True, null=True)
-    scan_points = models.CharField(verbose_name='本帧扫描点数', max_length=32, blank=True, null=True)
-    start_angle = models.CharField(verbose_name='本帧起始角度', max_length=32, blank=True, null=True)
-    step = models.CharField(verbose_name='本帧分辨率', max_length=32, blank=True, null=True)
+    # scan_time = models.CharField(verbose_name='扫描时间', max_length=32, blank=True, null=True)
+    # scan_points = models.CharField(verbose_name='本帧扫描点数', max_length=32, blank=True, null=True)
+    # start_angle = models.CharField(verbose_name='本帧起始角度', max_length=32, blank=True, null=True)
+    # step = models.CharField(verbose_name='本帧分辨率', max_length=32, blank=True, null=True)
     angle = models.CharField(verbose_name='当前点角度', max_length=32, blank=True, null=True)
     range = models.CharField(verbose_name='当前点距离', max_length=32, blank=True, null=True)
-    turns_flag = models.IntegerField(verbose_name='圈数标志', )
-    times = models.IntegerField(verbose_name='次数编号', )
-    timestamp = models.DateTimeField(verbose_name='测量的时间戳', )
+    # turns_flag = models.IntegerField(verbose_name='圈数标志', )
+    # times = models.IntegerField(verbose_name='次数编号', )
+    # timestamp = models.DateTimeField(verbose_name='数据接收时间', )
 
     class Meta:
         # managed = False
@@ -263,9 +263,9 @@ class CollectRaw(DataModel):
 
 class Result(DataModel):
     device_sn = models.CharField(verbose_name='设备编号', max_length=128)
-    timestamp = models.DateTimeField(verbose_name='测量的时间戳')
-    convergence = models.FloatField(verbose_name='收敛值', max_length=64)
-    sedimentation = models.FloatField(verbose_name='沉降值', max_length=64)
+    convergence = models.CharField(verbose_name='收敛值', max_length=64, blank=True, null=True)
+    sedimentation = models.CharField(verbose_name='沉降值', max_length=64, blank=True, null=True)
+    # timestamp = models.DateTimeField(verbose_name='计算时间')
 
     def __unicode__(self):
         return self.device_sn

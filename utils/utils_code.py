@@ -21,6 +21,9 @@ CMD_SET_START_STOP = 0x11       # 测量启停
 CMD_SET_ZERO_OFFSET = 0x23 	 # 零偏参数设置
 CMD_GET_ZERO_OFFSET = 0x24 	 # 零偏参数查询
 CMD_SET_PID = 0x21    # PID参数设置
+CMD_GET_3_ASIX_POS = 0x25  # 三轴姿态信息查询
+CMD_GET_TEMPER_HUMI = 0x26  # 温湿度信息查询
+
 # CMD_GET_DEVICE_INFO =     0x22 	 # PID参数查询
 CMD_ERR_REPORT = 0x92   # 故障上报
 

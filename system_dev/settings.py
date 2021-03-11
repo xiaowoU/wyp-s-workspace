@@ -136,7 +136,9 @@ TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
-USE_L10N = True
+# USE_L10N = True
+USE_L10N = False
+DATETIME_FORMAT = 'Y年n月j日 H:i:s.u'
 
 USE_TZ = False
 

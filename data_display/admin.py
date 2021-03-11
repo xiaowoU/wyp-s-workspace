@@ -5,13 +5,13 @@ from user_manage.models import CollectRaw, Result, UnifyDataRaw
 
 @admin.register(CollectRaw)
 class CollectRawAdmin(admin.ModelAdmin):
-    list_display = ('device_sn', 'scan_time', 'scan_points', 'start_angle', 'step', 'angle', 'range', 'turns_flag', 'times', 'timestamp')
+    list_display = ('device_sn', 'angle', 'range', 'create_time',)
     search_fields = ('device_sn',)
     list_filter = ('device_sn',)
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('device_sn', 'convergence', 'sedimentation', 'timestamp',)
+    list_display = ('device_sn', 'convergence', 'sedimentation', 'create_time',)
     search_fields = ('device_sn',)
     list_filter = ('device_sn',)
 

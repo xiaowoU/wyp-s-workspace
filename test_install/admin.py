@@ -90,7 +90,7 @@ class DeviceAdmin(admin.ModelAdmin):
 
 @admin.register(DevicePid)
 class DevicePidAdmin(admin.ModelAdmin):
-    list_display = ('device', 'angle_p', 'angle_i', 'speed_p', 'speed_i', 'max_acc', 'max_speed', 'max_angle', 'angle_err')
+    list_display = ('device', 'angle_p', 'angle_i', 'speed_p', 'speed_i', 'max_acc', 'max_speed', 'max_angle', 'angle_err', 'update_time')
     search_fields = ('device',)
     list_filter = ('device',)
 
@@ -121,7 +121,7 @@ class DevicePidAdmin(admin.ModelAdmin):
 
 @admin.register(MeasureArea)
 class MeasureAreaAdmin(admin.ModelAdmin):
-    list_display = ('device', 'name', 're_times', 'start_angle', 'end_angle', 'cycle')    # 'turns_flag',
+    list_display = ('device', 'name', 're_times', 'start_angle', 'end_angle', 'cycle', 'create_time')    # 'turns_flag',
     search_fields = ('device',)
     list_filter = ('device',)
 
@@ -163,7 +163,7 @@ class MeasureAreaAdmin(admin.ModelAdmin):
 
 @admin.register(ZeroOffset)
 class ZeroOffsetAdmin(admin.ModelAdmin):
-    list_display = ('device', 'zero_offset',)
+    list_display = ('device', 'zero_offset', 'update_time')
     search_fields = ('device',)
     list_filter = ('device',)
 
@@ -207,7 +207,7 @@ class UnifyParamAdmin(admin.ModelAdmin):
                     'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num',
                     'reserve',
                     'addr_storage', 'addr_upload', 'init_val', 'firm_ver',
-                    'soft_ver', 'power_type', 'charge_state', 'battery_volt',)
+                    'soft_ver', 'power_type', 'charge_state', 'battery_volt', 'update_time')
     fields = ('device', 'meas_intvl', 'up_intvl', 'meas_mode', 'range',
               'server_ip', 'server_bak_ip', 'server_port', 'server_bak_port',
               'bak_use_date', 'server_bak_switch', 'network_status', 'meas_num',)

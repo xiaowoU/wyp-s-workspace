@@ -1,7 +1,46 @@
 先更新sqlite3，再安装python3
+【基础】
+yum -y install gcc gcc-c++
+yum -y install wget
+yum -y install lrzsz
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel
+yum -y install tcl tcl-devel
+yum -y install libffi libffi-devel
+yum -y install ncurses-devel patch
+yum -y install readline readline-devel
+yum -y install python-dev*
+yum install -y libaio
 
-gis安装： https://my.oschina.net/freegis/blog/781657
-yum安装：
-yum install -y gcc gcc-c++
-yum install -y geos
-# yum install -y libtool libxml2 libxml2-devel libxslt libxslt-devel json-c json-c-devel cmake gmp gmp-devel mpfr mpfr-devel boost-devel pcre-dev
+【python3.9.0】
+wget -q https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tgz
+cd Python-3.9.0
+./configure
+make && make install
+ln -s /usr/local/bin/python3 /usr/bin/python3
+cd ..
+python3 get-pip.py
+
+【rabbitmq】
+yum -y install gcc glibc-devel make ncurses-devel openssl-devel xmlto perl wget
+
+【mysql8.0.22】
+uwsgitop查看监控数据
+
+【pandas】
+yum install xz-devel
+yum install python-backports-lzma
+pip3 install backports.lzma
+报错解决：
+    /usr/local/python3.7.4/lib/lzma.py
+    把（27line）
+        from _lzma import *
+        from _lzma import _encode_filter_properties, _decode_filter_properties
+    改成
+        try:
+            from _lzma import *
+            from _lzma import _encode_filter_properties, _decode_filter_properties
+        except ImportError:
+            from backports.lzma import *
+            from backports.lzma import _encode_filter_properties, _decode_filter_properties
+
+

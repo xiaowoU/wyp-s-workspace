@@ -11,13 +11,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from user_manage.models import User
-from user_manage.formAuth import RegForm, LoginForm
 from utils.mixin import LoginRequiredMixin
-from utils.proxy import ReadGeoInfo, ReadDataInfo
-
-from pyecharts import options as opts
-from pyecharts.charts import Bar, Map, Line
-
 
 
 '''
@@ -128,39 +122,4 @@ class LogoutView(LoginRequiredMixin, View):
 '''
 class GetChartView(LoginRequiredMixin, View):
     def get(self, request, chart):
-        # print('============%s=============' % chart)
-        dct = {'bar': self.get_bar,
-               'line': self.get_line,
-               'geo': self.get_geo}
-        if chart not in dct:
-            return HttpResponse("Error URL!!!!")
-        else:
-            # return HttpResponse(bar.render_embed())
-            return HttpResponse(dct[chart]().render_embed())
-
-    def get_bar(self) -> Bar:
-        bar = (
-            Bar()
-                .add_xaxis(["衬衫", "毛衣", "领带", "裤子", "风衣", "高跟鞋", "袜子"])
-                .add_yaxis("商家A", [114, 55, 27, 101, 125, 27, 105])
-                .add_yaxis("商家B", [57, 134, 137, 129, 145, 60, 49])
-                .set_global_opts(title_opts=opts.TitleOpts(title="某商场销售情况"))
-        )
-        return bar
-
-    @classmethod
-    # todo: param为device_sn,一张图表示一个设备情况
-    def get_line(self):
-        lineinfo = ReadDataInfo()
-        line_chart = lineinfo.generate_line("sn_001")
-        return line_chart
-
-
-    # /user_manage/line
-    # @decorators.permission_required
-    @classmethod
-    def get_geo(self):
-        geoinfo = ReadGeoInfo()
-        geo_map = geoinfo.generate_geo()
-        return geo_map
-
+        pass
