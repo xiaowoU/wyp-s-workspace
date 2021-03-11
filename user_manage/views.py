@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from user_manage.models import User
-from utils.mixin import LoginRequiredMixin
+# from utils.mixin import LoginRequiredMixin
 
 
 '''

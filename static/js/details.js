@@ -91,7 +91,7 @@ option = {
     ]
 };
 
-var url_page = "http://192.168.20.14:9999";
+var url_page = "http://106.14.148.241:9999";
 
 //异步加载数据
 var vm = new Vue({
