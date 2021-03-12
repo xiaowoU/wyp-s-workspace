@@ -149,7 +149,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "real_static")
+STATIC_ROOT = os.path.join("/", "media", "real_static")
 
 
 # 设置上传目录
