@@ -161,7 +161,7 @@ class Device(BaseModel):
 
 
 class DevicePid(BaseModel):
-    device = models.OneToOneField('test_install.Device', verbose_name='所属设备', on_delete=models.DO_NOTHING, blank=True, null=True)
+    device = models.OneToOneField('test_install.Device', verbose_name='所属设备', on_delete=models.CASCADE, blank=True, null=True)
     angle_p = models.CharField(verbose_name='角度比例值', max_length=32, blank=True, null=True)
     angle_i = models.CharField(verbose_name='角度积分值', max_length=32, blank=True, null=True)
     speed_p = models.CharField(verbose_name='速度比例值', max_length=32, blank=True, null=True)
@@ -179,7 +179,7 @@ class DevicePid(BaseModel):
         app_label = 'test_install'
 
 class MeasureArea(BaseModel):
-    device = models.ForeignKey('test_install.Device', verbose_name='所属设备', on_delete=models.DO_NOTHING, blank=True, null=True)
+    device = models.ForeignKey('test_install.Device', verbose_name='所属设备', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(verbose_name='区段名', max_length=128)
     re_times = models.CharField(verbose_name='单点重复测量次数', max_length=64)
     scan_resolution = models.CharField(verbose_name='扫面分辨率', max_length=64)
@@ -197,7 +197,7 @@ class MeasureArea(BaseModel):
 
 
 class ZeroOffset(BaseModel):
-    device = models.OneToOneField('test_install.Device',  verbose_name='所属设备', on_delete=models.DO_NOTHING, blank=True, null=True)
+    device = models.OneToOneField('test_install.Device',  verbose_name='所属设备', on_delete=models.CASCADE, blank=True, null=True)
     zero_offset = models.CharField(verbose_name='零偏参数', max_length=32, blank=True, null=True)
 
     class Meta:
@@ -208,7 +208,7 @@ class ZeroOffset(BaseModel):
         app_label = 'test_install'
 
 class UnifyParam(BaseModel):
-    device = models.OneToOneField('test_install.Device', verbose_name='所属设备', on_delete=models.DO_NOTHING, blank=True, null=True)
+    device = models.OneToOneField('test_install.Device', verbose_name='所属设备', on_delete=models.CASCADE, blank=True, null=True)
     meas_intvl = models.CharField(verbose_name='测量(采集)频率', max_length=32, blank=True, null=True)
     up_intvl = models.CharField(verbose_name='上传频率', max_length=32, blank=True, null=True)
     meas_mode = models.CharField(verbose_name='测量值模式', max_length=32, blank=True, null=True)
